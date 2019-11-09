@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import BasicDetails from './basic';
 import Skills from './skills';
+import Companies from './companies';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,7 +33,7 @@ function getStepContent(step) {
     case 1:
       return <Skills/>
     case 2:
-      return 'This is the bit I really care about!';
+      return <Companies/>
     default:
       return 'Unknown step';
   }
