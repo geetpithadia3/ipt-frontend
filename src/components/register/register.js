@@ -6,6 +6,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import BasicDetails from './basic';
+import Skills from './skills';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getSteps() {
-  return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+  return ['Basic Details', 'Skills', 'Company'];
 }
 
 function getStepContent(step) {
@@ -29,7 +30,7 @@ function getStepContent(step) {
     case 0:
       return <BasicDetails/>
     case 1:
-      return 'What is an ad group anyways?';
+      return <Skills/>
     case 2:
       return 'This is the bit I really care about!';
     default:
@@ -138,7 +139,7 @@ export default function Register() {
                 onClick={handleNext}
                 className={classes.button}
               >
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                {activeStep === steps.length - 1 ? 'Finish' : '>'}
               </Button>
             </div>
           </div>
