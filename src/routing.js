@@ -10,5 +10,5 @@ export const routing = (
         <Route exact path="/(|login)" component={Login} />
         <Route exact path="/register" component={SignUp} />
       </Switch>
-  </Router>
+    </Router>
 )
