@@ -45,6 +45,8 @@ const styles = theme => ({
   }
 });
 
+const Link1 = React.forwardRef((props, ref) => <ReactLink innerRef={ref} {...props} />);
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -141,11 +143,9 @@ class Login extends Component {
               </Button>
               <Grid container>
                 <Grid item>
-                  <ReactLink to="/register">
-                    <Link href="#" variant="body2">
-                      {"Don't have an account? Sign Up"}
-                    </Link>
-                  </ReactLink>
+                  <Link component={Link1} to="/register" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
                 </Grid>
               </Grid>
             </form>
