@@ -44,22 +44,18 @@ class Login extends Component {
   }
   handleFormSubmit(e) {
     e.preventDefault();
-    var apiBaseUrl = "http://localhost:5000/";
+    var apiBaseUrl = "http://localhost:5000/api/user/";
     var self = this;
     var payload = {
-      "username": this.state.email,
+      "email": this.state.email,
       "password": this.state.password
     }
     axios.post(apiBaseUrl + 'authenticate', payload)
       .then(function (response) {
-        console.log(response);
-        if (response.status == 200) {
-          console.log("Login successfull");
-          // var uploadScreen = [];
-          // uploadScreen.push(<UploadScreen appContext={self.props.appContext} />)
-          // self.props.appContext.setState({ loginPage: [], uploadScreen: uploadScreen })
+        if (response.data.status == 200) {
+          
         }
-        else if (response.data.code == 204) {
+        else if (response.data.status == 204) {
           console.log("Username password do not match");
           alert("username password do not match")
         }
@@ -131,11 +127,6 @@ class Login extends Component {
                 Login
               </Button>
               <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
                 <Grid item>
                   <Link href="#" variant="body2">
                     {"Don't have an account? Sign Up"}
