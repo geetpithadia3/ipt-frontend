@@ -7,6 +7,6 @@ import Dashboard from './components/dashboard'
 import DragDrop from './components/DragDrop';
 
 ReactDOM.render(
-    <DragDrop/>,
+    <Login/>,
     document.getElementById('root')
 );
