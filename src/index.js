@@ -4,9 +4,9 @@ import './index.css';
 import Login from './components/login';
 import SignUp from './components/register/register';
 import Dashboard from './components/dashboard'
-import DragDrop from './components/DragDrop';
+import { routing } from './routing';
 
 ReactDOM.render(
-    <SignUp/>,
+    routing,
     document.getElementById('root')
 );

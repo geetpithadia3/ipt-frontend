@@ -1,9 +1,21 @@
 import React, { Component } from "react";
-import { Grid, CssBaseline, Paper, Avatar, Typography, Checkbox, Button, Link, TextField, FormControlLabel } from "@material-ui/core";
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import {
+  Grid,
+  CssBaseline,
+  Paper,
+  Avatar,
+  Typography,
+  Checkbox,
+  Button,
+  Link,
+  TextField,
+  FormControlLabel
+} from "@material-ui/core";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { withStyles } from "@material-ui/core/styles";
-import logo from '../assets/images/uwindsor_logo.svg';
-import axios from 'axios'
+import logo from "../assets/images/uwindsor_logo.svg";
+import axios from "axios";
+import { Link as ReactLink } from "react-router-dom";
 const styles = theme => ({
   root: {
     height: "100vh"
@@ -37,9 +49,9 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: ''
-    }
+      email: "",
+      password: ""
+    };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
   handleFormSubmit(e) {
@@ -47,31 +59,26 @@ class Login extends Component {
     var apiBaseUrl = "http://localhost:5000/api/user/";
     var self = this;
     var payload = {
-      "email": this.state.email,
-      "password": this.state.password
-    }
-    axios.post(apiBaseUrl + 'authenticate', payload)
-      .then(function (response) {
+      email: this.state.email,
+      password: this.state.password
+    };
+    axios
+      .post(apiBaseUrl + "authenticate", payload)
+      .then(function(response) {
         if (response.data.status == 200) {
-          
-        }
-        else if (response.data.status == 204) {
+        } else if (response.data.status == 204) {
           console.log("Username password do not match");
-          alert("username password do not match")
-        }
-        else {
+          alert("username password do not match");
+        } else {
           console.log("Username does not exists");
           alert("Username does not exist");
         }
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
       });
-
   }
-  handleClearForm() {
-
-  }
+  handleClearForm() {}
   render() {
     const { classes } = this.props;
     return (
@@ -86,7 +93,11 @@ class Login extends Component {
             <Typography component="h1" variant="h5">
               Internship Progress Tracker - Sign in
             </Typography>
-            <form className={classes.form} noValidate onSubmit={this.handleFormSubmit}>
+            <form
+              className={classes.form}
+              noValidate
+              onSubmit={this.handleFormSubmit}
+            >
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -111,7 +122,9 @@ class Login extends Component {
                 id="password"
                 autoComplete="current-password"
                 value={this.state.password}
-                onChange={event => this.setState({ password: event.target.value })}
+                onChange={event =>
+                  this.setState({ password: event.target.value })
+                }
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -128,9 +141,11 @@ class Login extends Component {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
+                  <ReactLink to="/register">
+                    <Link href="#" variant="body2">
+                      {"Don't have an account? Sign Up"}
+                    </Link>
+                  </ReactLink>
                 </Grid>
               </Grid>
             </form>
