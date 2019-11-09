@@ -12,8 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { register } from '../serviceWorker';
-import DragDrop from './DragDrop';
+import { register } from '../../serviceWorker';
+import DragDrop from '../DragDrop';
 
 function Copyright() {
   return (
@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignUp() {
+export default function BasicDetails() {
   const classes = useStyles();
 
   return (
@@ -134,10 +134,8 @@ export default function SignUp() {
           </Grid>
         </form>
       </div>
-      <DragDrop/>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+
+      
     </Container>
   );
 }
