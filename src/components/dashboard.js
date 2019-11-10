@@ -18,7 +18,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
-
+import Barchart from './charts/Barchart'
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -169,12 +169,23 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
+
             {/* Chart */}
-            {/* <Grid item xs={12} md={8} lg={9}>
+            <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
-                <Chart />
+                <Barchart data={[["Sun", 32], ["Mon", 46], ["Tue", 28]]} />
               </Paper>
-            </Grid> */}
+            </Grid>
+            <Grid item xs={12} md={8} lg={9}>
+              <Paper className={fixedHeightPaper}>
+                <Barchart data={[["Sun", 32], ["Mon", 46], ["Tue", 28]]} />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={8} lg={9}>
+              <Paper className={fixedHeightPaper}>
+                <Barchart data={[["Sun", 32], ["Mon", 46], ["Tue", 28]]} />
+              </Paper>
+            </Grid>
             {/* Recent Deposits */}
             {/* <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>

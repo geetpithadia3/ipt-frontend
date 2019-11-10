@@ -1,11 +1,11 @@
-import victory from "victory"
-import VictoryBar from "victory";
 
-<VictoryChart>
-        <VictoryBar data={[
-      { x: "lizard", y: 1234 },
-      { x: "snake", y: 2048 },
-      { x: "crocodile", y: 2600 },
-      { x: "alligator", y: 9000 },
-    ]} />
-      </VictoryChart>
+import { LineChart,ColumnChart, PieChart } from 'react-chartkick'
+import 'chart.js'
+import React, { Component } from "react";
+
+function Barchart(props){
+    return (<ColumnChart data={props.data} />)
+}
+
+
+export default Barchart

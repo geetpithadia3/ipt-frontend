@@ -16,6 +16,7 @@ import { withStyles } from "@material-ui/core/styles";
 import logo from "../assets/images/uwindsor_logo.svg";
 import axios from "axios";
 import { Link as ReactLink } from "react-router-dom";
+
 const styles = theme => ({
   root: {
     height: "100vh"
@@ -82,8 +83,10 @@ class Login extends Component {
   render() {
     const { classes } = this.props;
     return (
+      
       <Grid container className={classes.root}>
         <CssBaseline />
+        
         <Grid item xs={false} sm={3} md={6} className={classes.image} />
         <Grid item xs={12} sm={9} md={6} component={Paper} elevation={6} square>
           <div className={classes.paper}>
@@ -140,6 +143,13 @@ class Login extends Component {
                 Login
               </Button>
               <Grid container>
+              <Grid item>
+                  <ReactLink to="/dashboard">
+                    <Link href="#" variant="body2">
+                      {"Dashboard"}
+                    </Link>
+                  </ReactLink>
+                </Grid>
                 <Grid item>
                   <ReactLink to="/register">
                     <Link href="#" variant="body2">
