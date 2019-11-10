@@ -9,6 +9,7 @@ export const routing = (
       <Switch>
         <Route exact path="/(|login)" component={Login} />
         <Route exact path="/register" component={SignUp} />
+        <Route exact path="/dashboard" component={Dashboard} />
       </Switch>
     </Router>
 )

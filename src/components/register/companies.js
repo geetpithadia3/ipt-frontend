@@ -58,11 +58,7 @@ export default function Companies() {
 
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-           { <MoreVertIcon />}
-          </IconButton>
-        }
+        
         title="FACEBOOK"
         
       />
