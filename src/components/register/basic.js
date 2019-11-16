@@ -7,6 +7,12 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
+
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -51,10 +57,32 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  formControl: {
+   
+    minWidth: 120,
+  },
 }));
 
 export default function BasicDetails() {
   const classes = useStyles();
+  const [state, setState] = React.useState({
+    intake: '',
+    name: 'hai',
+  });
+  
+
+  const inputLabel = React.useRef(null);
+  const [labelWidth, setLabelWidth] = React.useState(0);
+  React.useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
+
+  const handleChange = name => event => {
+    setState({
+      ...state,
+      [name]: event.target.value,
+    });
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -70,6 +98,7 @@ export default function BasicDetails() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
@@ -82,6 +111,7 @@ export default function BasicDetails() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+
                 variant="outlined"
                 required
                 fullWidth
@@ -114,17 +144,85 @@ export default function BasicDetails() {
                 autoComplete="current-password"
               />
             </Grid>
-            
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="confirm password"
+                label="Confirm Password"
+                type="password"
+                id="confirm password"
+                autoComplete="current-password"
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="number"
+                label="Phone Number"
+                type="text"
+                pattern="[0-9]*"
+                id="phone password"
+                autoComplete="phone-number"
+              />
+            </Grid>
+
+            <Grid item xs={10} sm={5}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
+                  Intake
+        </InputLabel>
+                <Select
+                  native
+                  value={state.intake}
+                  onChange={handleChange('intake')}
+                  labelWidth={labelWidth}
+                  inputProps={{
+                    name: 'intake',
+                    id: 'outlined-age-native-simple',
+                    
+                  }}
+                >
+                  <option value="" />
+                  <option value={10}>January</option>
+                  <option value={20}>May</option>
+                  <option value={30}>September</option>
+                </Select>
+              </FormControl>
+            </Grid>
+          
+
+          <Grid item xs={10} sm={5}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
+                  Year
+        </InputLabel>
+                <Select
+                  native
+                  value={state.year}
+                  onChange={handleChange('year')}
+                  labelWidth={labelWidth}
+                  inputProps={{
+                    name: 'year',
+                    id: 'outlined-age-native-simple',
+                    
+                  }}
+                >
+                  <option value="" />
+                  <option value={10}>2015</option>
+                  <option value={20}>2016</option>
+                  <option value={30}>2017</option>
+                  <option value={40}>2018</option>
+                  <option value={50}>2019</option>
+
+                </Select>
+              </FormControl>
+            </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign Up
-          </Button>
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="#" variant="body2">
@@ -135,7 +233,7 @@ export default function BasicDetails() {
         </form>
       </div>
 
-      
+
     </Container>
   );
 }
