@@ -6,4 +6,4 @@ import Barchart from "./components/charts/Barchart"
 ReactDOM.render(
     routing,
     document.getElementById('root')
-);
+);  
