@@ -63,7 +63,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function BasicDetails() {
+export default function BasicDetails(props) {
+  /**
+   * Fields of basic details form
+   */
+  
   const classes = useStyles();
   const [state, setState] = React.useState({
     intake: '',
@@ -83,6 +87,10 @@ export default function BasicDetails() {
       [name]: event.target.value,
     });
   };
+
+  const saveDetails = () => {
+    props.saveDetails("hello");
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -106,6 +114,7 @@ export default function BasicDetails() {
                 fullWidth
                 id="firstName"
                 label="First Name"
+                onChange = {saveDetails}
                 autoFocus
               />
             </Grid>

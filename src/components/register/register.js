@@ -1,48 +1,59 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import BasicDetails from './basic';
-import Skills from './skills';
-import Companies from './companies';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import BasicDetails from "./basic";
+import Skills from "./skills";
+import Companies from "./companies";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '90%',
+    width: "90%"
   },
   button: {
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(1)
   },
   instructions: {
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
-}));
-
-function getSteps() {
-  return ['Basic Details', 'Skills', 'Company'];
-}
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <BasicDetails/>
-    case 1:
-      return <Skills/>
-    case 2:
-      return <Companies/>
-    default:
-      return 'Unknown step';
+    marginBottom: theme.spacing(1)
   }
-}
+}));
 
 export default function Register() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
+
+  let [registerationData, setRegisterationData] = React.useState({
+    basicDetails: {},
+    skills: {},
+    companies: {}
+  });
+
+  const updateBasicProps = (data) => {
+    console.log(data);
+  }
+
+  function getSteps() {
+    return ["Basic Details", "Skills", "Company"];
+  }
+  
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <BasicDetails saveDetails = {updateBasicProps}/>;
+      case 1:
+        return <Skills saveDetails = {updateBasicProps}/>;
+      case 2:
+        return <Companies />;
+      default:
+        return "Unknown step";
+    }
+  }
+
   const steps = getSteps();
 
   const isStepOptional = step => {
@@ -94,7 +105,9 @@ export default function Register() {
           const stepProps = {};
           const labelProps = {};
           if (isStepOptional(index)) {
-            labelProps.optional = <Typography variant="caption">Optional</Typography>;
+            labelProps.optional = (
+              <Typography variant="caption">Optional</Typography>
+            );
           }
           if (isStepSkipped(index)) {
             stepProps.completed = false;
@@ -118,9 +131,15 @@ export default function Register() {
           </div>
         ) : (
           <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+            <Typography className={classes.instructions}>
+              {getStepContent(activeStep)}
+            </Typography>
             <div>
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+              <Button
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                className={classes.button}
+              >
                 Back
               </Button>
               {isStepOptional(activeStep) && (
@@ -140,7 +159,7 @@ export default function Register() {
                 onClick={handleNext}
                 className={classes.button}
               >
-                {activeStep === steps.length - 1 ? 'Finish' : '>'}
+                {activeStep === steps.length - 1 ? "Finish" : ">"}
               </Button>
             </div>
           </div>
