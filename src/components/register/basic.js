@@ -1,29 +1,21 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 
 import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { register } from '../../serviceWorker';
-import DragDrop from '../DragDrop';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography component={'div'} variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
@@ -70,8 +62,12 @@ export default function BasicDetails(props) {
   
   const classes = useStyles();
   const [state, setState] = React.useState({
-    intake: '',
-    name: 'hai',
+    firstName: props.data.firstName || '',
+    lastName: props.data.lastName || '',
+    email: props.data.email || '',
+    password: props.data.password || '',
+    intake: props.data.intake || '',
+    year: props.data.year || ''
   });
   
 
@@ -88,9 +84,12 @@ export default function BasicDetails(props) {
     });
   };
 
-  const saveDetails = () => {
-    props.saveDetails("hello");
-  }
+  React.useEffect(() => {
+    props.saveDetails({
+      component: 'basic',
+      data: state
+    });
+  }, [state]);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -106,7 +105,6 @@ export default function BasicDetails(props) {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
@@ -114,7 +112,8 @@ export default function BasicDetails(props) {
                 fullWidth
                 id="firstName"
                 label="First Name"
-                onChange = {saveDetails}
+                onChange = {handleChange('firstName')}
+                value = {state.firstName}
                 autoFocus
               />
             </Grid>
@@ -127,7 +126,9 @@ export default function BasicDetails(props) {
                 id="lastName"
                 label="Last Name"
                 name="lastName"
+                onChange = {handleChange('lastName')}
                 autoComplete="lname"
+                value = {state.lastName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -138,7 +139,9 @@ export default function BasicDetails(props) {
                 id="email"
                 label="Email Address"
                 name="email"
+                onChange = {handleChange('email')}
                 autoComplete="email"
+                value = {state.email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -149,11 +152,13 @@ export default function BasicDetails(props) {
                 name="password"
                 label="Password"
                 type="password"
+                onChange = {handleChange('password')}
                 id="password"
                 autoComplete="current-password"
+                value = {state.password}
               />
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
@@ -164,9 +169,9 @@ export default function BasicDetails(props) {
                 id="confirm password"
                 autoComplete="current-password"
               />
-            </Grid>
+            </Grid> */}
 
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
@@ -178,11 +183,11 @@ export default function BasicDetails(props) {
                 id="phone password"
                 autoComplete="phone-number"
               />
-            </Grid>
+            </Grid> */}
 
             <Grid item xs={10} sm={5}>
               <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
+                <InputLabel ref={inputLabel} htmlFor="outlined-intake">
                   Intake
         </InputLabel>
                 <Select
@@ -192,14 +197,14 @@ export default function BasicDetails(props) {
                   labelWidth={labelWidth}
                   inputProps={{
                     name: 'intake',
-                    id: 'outlined-age-native-simple',
+                    id: 'outlined-intake',
                     
                   }}
                 >
                   <option value="" />
-                  <option value={10}>January</option>
-                  <option value={20}>May</option>
-                  <option value={30}>September</option>
+                  <option value={'January'}>January</option>
+                  <option value={'May'}>May</option>
+                  <option value={'September'}>September</option>
                 </Select>
               </FormControl>
             </Grid>
@@ -207,7 +212,7 @@ export default function BasicDetails(props) {
 
           <Grid item xs={10} sm={5}>
               <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
+                <InputLabel ref={inputLabel} htmlFor="outlined-year">
                   Year
         </InputLabel>
                 <Select
@@ -217,16 +222,16 @@ export default function BasicDetails(props) {
                   labelWidth={labelWidth}
                   inputProps={{
                     name: 'year',
-                    id: 'outlined-age-native-simple',
+                    id: 'outlined-year',
                     
                   }}
                 >
                   <option value="" />
-                  <option value={10}>2015</option>
-                  <option value={20}>2016</option>
-                  <option value={30}>2017</option>
-                  <option value={40}>2018</option>
-                  <option value={50}>2019</option>
+                  <option value={2015}>2015</option>
+                  <option value={2016}>2016</option>
+                  <option value={2017}>2017</option>
+                  <option value={2018}>2018</option>
+                  <option value={2019}>2019</option>
 
                 </Select>
               </FormControl>

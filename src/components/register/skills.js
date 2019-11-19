@@ -11,8 +11,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 
-let skillSet =['C','C++','JAVA'];
-
 const useStyles = makeStyles(theme => ({
   root: {
     margin: 'auto',
@@ -43,14 +41,24 @@ function union(a, b) {
   return [...a, ...not(b, a)];
 }
 
-export default function Skills() {
+export default function Skills(props) {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([]);
+
+  let totalSkills =['C','C++','JAVA'];
+  let skillSet = not(totalSkills, props.data)
   const [left, setLeft] = React.useState(skillSet);
-  const [right, setRight] = React.useState([]);
+  const [right, setRight] = React.useState(props.data);
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
+
+  React.useEffect(() => {
+    props.saveDetails({
+      component: 'skills',
+      data: right
+    });
+  }, [right]);
 
   const handleToggle = value => () => {
     const currentIndex = checked.indexOf(value);

@@ -29,12 +29,31 @@ export default function Register() {
 
   let [registerationData, setRegisterationData] = React.useState({
     basicDetails: {},
-    skills: {},
+    skills: [],
     companies: {}
   });
 
   const updateBasicProps = (data) => {
-    console.log(data);
+    switch(data.component) {
+      case 'basic':
+        setRegisterationData({
+          ...registerationData,
+          basicDetails : data.data
+        })
+        break;
+      case 'skills':
+          setRegisterationData({
+            ...registerationData,
+            skills : data.data
+          })
+        break;
+      case 'companies':
+          setRegisterationData({
+            ...registerationData,
+            companies : data.data
+          })
+        break;
+    }
   }
 
   function getSteps() {
@@ -44,11 +63,11 @@ export default function Register() {
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <BasicDetails saveDetails = {updateBasicProps}/>;
+        return <BasicDetails data={registerationData.basicDetails} saveDetails = {updateBasicProps}/>;
       case 1:
-        return <Skills saveDetails = {updateBasicProps}/>;
+        return <Skills data={registerationData.skills} saveDetails = {updateBasicProps}/>;
       case 2:
-        return <Companies />;
+        return <Companies data={registerationData.companies} saveDetails = {updateBasicProps}/>;
       default:
         return "Unknown step";
     }
