@@ -13,11 +13,10 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import Checkbox from '@material-ui/core/Checkbox';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Favorite from '@material-ui/icons/Favorite';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import logo from "../../assets/images/facebook.jpg";
+import { APILinks } from '../apisLink';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -49,6 +48,8 @@ export default function Companies() {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const getCompanyDetailsURL = APILinks.fetchCompanyDetails();
 
   return (
     <Card className={classes.card}>

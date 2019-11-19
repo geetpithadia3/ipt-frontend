@@ -16,6 +16,7 @@ import { withStyles } from "@material-ui/core/styles";
 import logo from "../assets/images/uwindsor_logo.svg";
 import axios from "axios";
 import { Link as ReactLink } from "react-router-dom";
+import { APILinks } from './apisLink';
 
 const styles = theme => ({
   root: {
@@ -59,7 +60,7 @@ class Login extends Component {
   }
   handleFormSubmit(e) {
     e.preventDefault();
-    var apiBaseUrl = "http://localhost:5000/api/user/";
+    var apiBaseUrl = APILinks.getLoginUrl();
     var self = this;
     var payload = {
       email: this.state.email,
