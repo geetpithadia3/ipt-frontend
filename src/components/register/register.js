@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import BasicDetails from "./basic";
 import Skills from "./skills";
 import Companies from "./companies";
+import Success from "./success";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,7 +19,8 @@ const useStyles = makeStyles(theme => ({
   },
   instructions: {
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    overflow: "auto"
   }
 }));
 
@@ -30,7 +32,7 @@ export default function Register() {
   let [registerationData, setRegisterationData] = React.useState({
     basicDetails: {},
     skills: [],
-    companies: {}
+    companies: []
   });
 
   const updateBasicProps = (data) => {
@@ -83,15 +85,24 @@ export default function Register() {
     return skipped.has(step);
   };
 
+  const validateData = () => {
+    return (Object.keys(registerationData.basicDetails).length > 0 && (registerationData.skills).length > 0 && (registerationData.companies).length > 0);
+  }
+
   const handleNext = () => {
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
       newSkipped.delete(activeStep);
     }
-
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
-    setSkipped(newSkipped);
+    const newStep = activeStep + 1;
+    if (newStep === getSteps().length && validateData()) {
+      setActiveStep(prevActiveStep => prevActiveStep + 1);
+      setSkipped(newSkipped);
+    } else if (newStep < getSteps().length) {
+      setActiveStep(prevActiveStep => prevActiveStep + 1);
+      setSkipped(newSkipped);
+    }
   };
 
   const handleBack = () => {
@@ -139,18 +150,11 @@ export default function Register() {
         })}
       </Stepper>
       <div>
-        {activeStep === steps.length ? (
-          <div>
-            <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Button onClick={handleReset} className={classes.button}>
-              Reset
-            </Button>
-          </div>
+        {((activeStep === steps.length) && (validateData())) ? (
+          <Success data={registerationData} />
         ) : (
           <div>
-            <Typography className={classes.instructions}>
+            <Typography className={classes.instructions} component="div">
               {getStepContent(activeStep)}
             </Typography>
             <div>
