@@ -8,5 +8,8 @@ export const APILinks = {
     },
     fetchCompanyDetails() {
         return this.getBaseUrl() + '/api/company/get_company_details_list';
+    },
+    registerUserUrl() {
+        return this.getBaseUrl() + '/api/user/add_user';
     }
 }
