@@ -57,7 +57,8 @@ export default function Dashboard() {
     ]
   }
   const [skillsLoading,skillsData]= useHttpGet(APILinks.getSkillsCountUrl() ,[ ])
-  const [openPositionsLoading,openPositionsData]= useHttpPost(APILinks.getOpenPositionCountUrl() ,companyList,[ ])
+  const [openPositionsLoading,openPositionsData]= useHttpGet(APILinks.getOpenPositionCountUrl() ,companyList,[ ])
+  const [skillsCompaniesCountLoading,skillsCompaniesCountData]= useHttpGet(APILinks.getSkillsCompaniesCountUrl() ,companyList,[ ])
 
   const skillsChart = {
     labels: skillsData? Object.keys(skillsData.data): [],
@@ -98,7 +99,9 @@ export default function Dashboard() {
                 <Store />
               </CardIcon>
               <p className={classes.cardCategory}>Companies</p>
-              <h1 className={classes.cardTitle}>3</h1>
+              <h1 className={classes.cardTitle}>
+                {skillsCompaniesCountData? skillsCompaniesCountData.data.companies: <span>Loading....</span>}
+              </h1>
             </CardHeader>
             <CardFooter stats>
               {/* <div className={classes.stats}>

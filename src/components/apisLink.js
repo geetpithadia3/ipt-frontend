@@ -13,9 +13,12 @@ export const APILinks = {
         return this.getBaseUrl() + '/api/user/add_user';
     },
     getSkillsCountUrl() {
-        return this.getBaseUrl() + '/api/dashboard/get_skills_count';
+        return this.getBaseUrl() + '/api/dashboard/get_skills_required_count';
     },
     getOpenPositionCountUrl() {
         return this.getBaseUrl() + '/api/dashboard/get_open_position_count';
+    },
+    getSkillsCompaniesCountUrl() {
+        return this.getBaseUrl() + '/api/dashboard/get_skills_companies_count';
     }
 }
