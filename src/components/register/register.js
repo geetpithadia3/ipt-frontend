@@ -36,24 +36,24 @@ export default function Register() {
   });
 
   const updateBasicProps = (data) => {
-    switch(data.component) {
+    switch (data.component) {
       case 'basic':
         setRegisterationData({
           ...registerationData,
-          basicDetails : data.data
+          basicDetails: data.data
         })
         break;
       case 'skills':
-          setRegisterationData({
-            ...registerationData,
-            skills : data.data
-          })
+        setRegisterationData({
+          ...registerationData,
+          skills: data.data
+        })
         break;
       case 'companies':
-          setRegisterationData({
-            ...registerationData,
-            companies : data.data
-          })
+        setRegisterationData({
+          ...registerationData,
+          companies: data.data
+        })
         break;
     }
   }
@@ -61,15 +61,15 @@ export default function Register() {
   function getSteps() {
     return ["Basic Details", "Skills", "Company"];
   }
-  
+
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <BasicDetails data={registerationData.basicDetails} saveDetails = {updateBasicProps}/>;
+        return <BasicDetails data={registerationData.basicDetails} saveDetails={updateBasicProps} />;
       case 1:
-        return <Skills data={registerationData.skills} saveDetails = {updateBasicProps}/>;
+        return <Skills data={registerationData.skills} saveDetails={updateBasicProps} />;
       case 2:
-        return <Companies data={registerationData.companies} saveDetails = {updateBasicProps}/>;
+        return <Companies data={registerationData.companies} saveDetails={updateBasicProps} />;
       default:
         return "Unknown step";
     }
@@ -153,40 +153,40 @@ export default function Register() {
         {((activeStep === steps.length) && (validateData())) ? (
           <Success data={registerationData} />
         ) : (
-          <div>
-            <Typography className={classes.instructions} component="div">
-              {getStepContent(activeStep)}
-            </Typography>
             <div>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                className={classes.button}
-              >
-                Back
+              <Typography className={classes.instructions} component="div">
+                {getStepContent(activeStep)}
+              </Typography>
+              <div>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  className={classes.button}
+                >
+                  Back
               </Button>
-              {isStepOptional(activeStep) && (
+                {isStepOptional(activeStep) && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSkip}
+                    className={classes.button}
+                  >
+                    Skip
+                </Button>
+                )}
+
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={handleSkip}
+                  onClick={handleNext}
                   className={classes.button}
                 >
-                  Skip
+                  {activeStep === steps.length - 1 ? "Finish" : ">"}
                 </Button>
-              )}
-
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.button}
-              >
-                {activeStep === steps.length - 1 ? "Finish" : ">"}
-              </Button>
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );

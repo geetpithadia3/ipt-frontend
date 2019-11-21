@@ -20,6 +20,7 @@ class Success extends Component {
 
   componentDidMount() {
     var apiBaseUrl = APILinks.registerUserUrl();
+    console.log(this.props.data)
     Axios.post(apiBaseUrl, this.props.data).then(
       response => {
         console.log(this.props);

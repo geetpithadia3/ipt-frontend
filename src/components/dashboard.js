@@ -13,6 +13,8 @@ import Update from "@material-ui/icons/Update";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import AccessTime from "@material-ui/icons/AccessTime";
 import Accessibility from "@material-ui/icons/Accessibility";
+import Apps from "@material-ui/icons/Apps";
+import CalendarToday from "@material-ui/icons/CalendarToday";
 import BugReport from "@material-ui/icons/BugReport";
 import Code from "@material-ui/icons/Code";
 import Cloud from "@material-ui/icons/Cloud";
@@ -28,9 +30,9 @@ import CardHeader from "./tools/Card/CardHeader.js";
 import CardIcon from "./tools/Card/CardIcon.js";
 import CardBody from "./tools/Card/CardBody.js";
 import CardFooter from "./tools/Card/CardFooter.js";
-
+import MenuAppBar from "./ToolBar"
 import { bugs, website, server } from "variables/general.js";
-
+import { useHttpGet, useHttpPost } from "./http";
 import {
   dailySalesChart,
   emailsSubscriptionChart,
@@ -42,30 +44,49 @@ import styles from "../assets/jss/material-dashboard-react/views/dashboardStyle"
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
-  const classes = useStyles();
+  const classes = useStyles()
+  const companyList = {
+    "companyList":[
+      {
+        "companyName":"BlackBerry"
+      },
+      {
+        "companyName":"Microsoft"
+      }
+    ]
+  }
+  const [skillsLoading,skillsData]= useHttpGet("/dashboard/get_skills_count",[ ])
+  const [openPositionsLoading,openPositionsData]= useHttpPost("/dashboard/get_open_position_count",companyList,[ ])
+
+  const skillsChart = {
+    labels: skillsData? Object.keys(skillsData.data): [],
+    series: [skillsData? Object.values(skillsData.data): []]
+  }
+  
   return (
     <div>
-      <GridContainer>
+      <MenuAppBar/>
+      <GridContainer  style={{marginTop:'70px !important'}}>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
             <CardHeader color="warning" stats icon>
               <CardIcon color="warning">
                 <Icon>content_copy</Icon>
               </CardIcon>
-              <p className={classes.cardCategory}>Used Space</p>
-              <h3 className={classes.cardTitle}>
-                49/50 <small>GB</small>
-              </h3>
+              <p className={classes.cardCategory}>Open Positions</p>
+              <h1 className={classes.cardTitle}>
+                {openPositionsData? openPositionsData.data: <span>Loading....</span>}
+              </h1>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
+              {/* <div className={classes.stats}>
                 <Danger>
                   <Warning />
                 </Danger>
                 <a href="#pablo" onClick={e => e.preventDefault()}>
                   Get more space
                 </a>
-              </div>
+              </div> */}
             </CardFooter>
           </Card>
         </GridItem>
@@ -75,31 +96,31 @@ export default function Dashboard() {
               <CardIcon color="success">
                 <Store />
               </CardIcon>
-              <p className={classes.cardCategory}>Revenue</p>
-              <h3 className={classes.cardTitle}>$34,245</h3>
+              <p className={classes.cardCategory}>Companies</p>
+              <h1 className={classes.cardTitle}>3</h1>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
+              {/* <div className={classes.stats}>
                 <DateRange />
                 Last 24 Hours
-              </div>
+              </div> */}
             </CardFooter>
           </Card>
         </GridItem>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
-            <CardHeader color="danger" stats icon>
-              <CardIcon color="danger">
-                <Icon>info_outline</Icon>
+            <CardHeader color="primary" stats icon>
+              <CardIcon color="primary">
+                <CalendarToday/>
               </CardIcon>
-              <p className={classes.cardCategory}>Fixed Issues</p>
-              <h3 className={classes.cardTitle}>75</h3>
+              <p className={classes.cardCategory}>Events</p>
+              <h1 className={classes.cardTitle}>7</h1>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
+              {/* <div className={classes.stats}>
                 <LocalOffer />
                 Tracked from Github
-              </div>
+              </div> */}
             </CardFooter>
           </Card>
         </GridItem>
@@ -107,22 +128,22 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="info" stats icon>
               <CardIcon color="info">
-                <Accessibility />
+                <Apps />
               </CardIcon>
-              <p className={classes.cardCategory}>Followers</p>
-              <h3 className={classes.cardTitle}>+245</h3>
+              <p className={classes.cardCategory}>Skills</p>
+              <h1 className={classes.cardTitle}>5</h1>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
+              {/* <div className={classes.stats}>
                 <Update />
                 Just Updated
-              </div>
+              </div> */}
             </CardFooter>
           </Card>
         </GridItem>
       </GridContainer>
       <GridContainer>
-        <GridItem xs={12} sm={12} md={4}>
+        <GridItem xs={12} sm={12} md={6}>
           <Card chart>
             <CardHeader >
               <ChartistGraph
@@ -149,12 +170,12 @@ export default function Dashboard() {
             </CardFooter>
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={12} md={4}>
+        <GridItem xs={12} sm={12} md={6}>
           <Card chart>
             <CardHeader>
               <ChartistGraph
                 className="ct-chart"
-                data={emailsSubscriptionChart.data}
+                data={skillsChart}
                 type="Bar"
                 options={emailsSubscriptionChart.options}
                 responsiveOptions={emailsSubscriptionChart.responsiveOptions}
@@ -172,7 +193,7 @@ export default function Dashboard() {
             </CardFooter>
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={12} md={4}>
+        {/* <GridItem xs={12} sm={12} md={4}>
           <Card chart>
             <CardHeader>
               <ChartistGraph
@@ -193,11 +214,33 @@ export default function Dashboard() {
               </div>
             </CardFooter>
           </Card>
-        </GridItem>
+        </GridItem> */}
       </GridContainer>
       <GridContainer>
-        <GridItem xs={12} sm={12} md={6}>
-          <CustomTabs
+        <GridItem xs={12} sm={12} md={12}>
+          {companyList["companyList"].map((c,index)=>{
+            return (<Card >
+              <CardHeader color={[
+    "warning",
+    "success",
+    "danger",
+    "info",
+    "primary",
+    "rose"
+  ][index%5]}>
+                <h3>{c.companyName}</h3>
+              </CardHeader>
+              <CardBody>
+                <h4 className={classes.cardTitle}>Completed Tasks</h4>
+                <p className={classes.cardCategory}>Last Campaign Performance</p>
+              </CardBody>
+              <CardFooter chart>
+                
+                Some weblink
+              </CardFooter>
+            </Card>)
+          })}
+          {/* <CustomTabs
             title="Tasks:"
             headerColor="primary"
             tabs={[
@@ -235,9 +278,9 @@ export default function Dashboard() {
                 )
               }
             ]}
-          />
+          /> */}
         </GridItem>
-        <GridItem xs={12} sm={12} md={6}>
+        {/* <GridItem xs={12} sm={12} md={6}>
           <Card>
             <CardHeader color="warning">
               <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
@@ -258,7 +301,7 @@ export default function Dashboard() {
               />
             </CardBody>
           </Card>
-        </GridItem>
+        </GridItem> */}
       </GridContainer>
     </div>
   );
