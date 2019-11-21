@@ -17,6 +17,7 @@ import logo from "../assets/images/uwindsor_logo.svg";
 import axios from "axios";
 import { Link as ReactLink } from "react-router-dom";
 import { APILinks } from './apisLink';
+import { Redirect } from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -54,10 +55,18 @@ class Login extends Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      loginSuccess: false
     };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
+
+  renderRedirect = () => {
+    if (this.state.loginSuccess) {
+      return <Redirect to='/dashboard' />
+    }
+  }
+
   handleFormSubmit(e) {
     e.preventDefault();
     var apiBaseUrl = APILinks.getLoginUrl();
@@ -70,6 +79,10 @@ class Login extends Component {
       .post(apiBaseUrl + "authenticate", payload)
       .then(function(response) {
         if (response.data.status == 200) {
+          // navigating to dashboard
+          self.setState({
+            loginSuccess: true
+          });
         } else if (response.data.status == 204) {
           console.log("Username password do not match");
           alert("username password do not match");
@@ -136,6 +149,7 @@ class Login extends Component {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
+              {this.renderRedirect()}
               <Button
                 type="submit"
                 fullWidth
@@ -146,13 +160,6 @@ class Login extends Component {
                 Login
               </Button>
               <Grid container>
-              <Grid item>
-                  <ReactLink to="/dashboard">
-                    <Link href="#" variant="body2">
-                      {"Dashboard"}
-                    </Link>
-                  </ReactLink>
-                </Grid>
                 <Grid item>
                   <Link component={Link1} to="/register" variant="body2">
                     {"Don't have an account? Sign Up"}
