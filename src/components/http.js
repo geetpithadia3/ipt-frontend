@@ -4,11 +4,10 @@ import axios from "axios";
 export const useHttpGet = (target,dependencies) =>{
     const [isLoading, setIsLoading] = useState(false);
     const [fetchedData, setFetchedData] =useState();
-    const apiBaseUrl = "http://localhost:5000/api"
     useEffect(() => {
         setIsLoading(true)
         axios
-        .get(apiBaseUrl+target)
+        .get(target)
         .then(function(response) {
           setFetchedData(response)
           setIsLoading(false)
@@ -26,11 +25,10 @@ export const useHttpGet = (target,dependencies) =>{
 export const useHttpPost = (target, payload,dependencies) =>{
   const [isLoading, setIsLoading] = useState(false);
   const [fetchedData, setFetchedData] =useState();
-  const apiBaseUrl = "http://localhost:5000/api"
   useEffect(() => {
       setIsLoading(true)
       axios
-      .post(apiBaseUrl+target, payload)
+      .post(target, payload)
       .then(function(response) {
         setFetchedData(response)
         setIsLoading(false)

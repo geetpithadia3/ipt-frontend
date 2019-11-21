@@ -38,6 +38,7 @@ import {
   emailsSubscriptionChart,
   completedTasksChart
 } from "../variables/charts.js";
+import { APILinks } from './apisLink';
 
 import styles from "../assets/jss/material-dashboard-react/views/dashboardStyle";
 
@@ -55,8 +56,8 @@ export default function Dashboard() {
       }
     ]
   }
-  const [skillsLoading,skillsData]= useHttpGet("/dashboard/get_skills_count",[ ])
-  const [openPositionsLoading,openPositionsData]= useHttpPost("/dashboard/get_open_position_count",companyList,[ ])
+  const [skillsLoading,skillsData]= useHttpGet(APILinks.getSkillsCountUrl() ,[ ])
+  const [openPositionsLoading,openPositionsData]= useHttpPost(APILinks.getOpenPositionCountUrl() ,companyList,[ ])
 
   const skillsChart = {
     labels: skillsData? Object.keys(skillsData.data): [],

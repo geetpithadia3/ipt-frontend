@@ -11,5 +11,11 @@ export const APILinks = {
     },
     registerUserUrl() {
         return this.getBaseUrl() + '/api/user/add_user';
+    },
+    getSkillsCountUrl() {
+        return this.getBaseUrl() + '/api/dashboard/get_skills_count';
+    },
+    getOpenPositionCountUrl() {
+        return this.getBaseUrl() + '/api/dashboard/get_open_position_count';
     }
 }
