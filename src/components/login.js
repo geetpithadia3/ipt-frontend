@@ -76,7 +76,7 @@ class Login extends Component {
       password: this.state.password
     };
     axios
-      .post(apiBaseUrl + "authenticate", payload)
+      .post(apiBaseUrl + "authenticate", payload,{"withCredentials":true, "headers":{ "Access-Control-Allow-Credentials":true,'Access-Control-Allow-Origin': 'http://localhost:3000'}})
       .then(function(response) {
         if (response.data.status == 200) {
           // navigating to dashboard

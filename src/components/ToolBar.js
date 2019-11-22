@@ -11,6 +11,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import { APILinks } from './apisLink';
+import axios from "axios";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,6 +43,18 @@ export default function MenuAppBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogOut=()=>{
+    var apiBaseUrl = APILinks.getLoginUrl();
+    axios
+      .get(apiBaseUrl + "logout", {"withCredentials":true, "headers":{ "Access-Control-Allow-Credentials":true,'Access-Control-Allow-Origin': 'http://localhost:3000'}})
+      .then(function(response) {
+        
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
 
   return (
     <div className={classes.root}>
@@ -79,7 +93,7 @@ export default function MenuAppBar() {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
               </Menu>
             </div>
           )}

@@ -6,33 +6,26 @@ import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import Store from "@material-ui/icons/Store";
-import Warning from "@material-ui/icons/Warning";
-import DateRange from "@material-ui/icons/DateRange";
-import LocalOffer from "@material-ui/icons/LocalOffer";
-import Update from "@material-ui/icons/Update";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import AccessTime from "@material-ui/icons/AccessTime";
-import Accessibility from "@material-ui/icons/Accessibility";
 import Apps from "@material-ui/icons/Apps";
 import CalendarToday from "@material-ui/icons/CalendarToday";
-import BugReport from "@material-ui/icons/BugReport";
-import Code from "@material-ui/icons/Code";
-import Cloud from "@material-ui/icons/Cloud";
 // core components
 import GridItem from "./tools/Grid/GridItem.js";
 import GridContainer from "./tools/Grid/GridContainer.js";
-import Table from "./tools/Table/Table.js";
-import Tasks from "./tools/Tasks/Tasks.js";
-import CustomTabs from "./tools/CustomTabs/CustomTabs.js";
-import Danger from "./tools/Typography/Danger.js";
 import Card from "./tools/Card/Card.js";
 import CardHeader from "./tools/Card/CardHeader.js";
 import CardIcon from "./tools/Card/CardIcon.js";
 import CardBody from "./tools/Card/CardBody.js";
 import CardFooter from "./tools/Card/CardFooter.js";
 import MenuAppBar from "./ToolBar"
-import { bugs, website, server } from "variables/general.js";
 import { useHttpGet, useHttpPost } from "./http";
+import Avatar from "@material-ui/core/Avatar";
+import microsoftLogo from "../assets/images/microsoft_logo.jpg";
+import blackberryLogo from "../assets/images/blackberry_logo.jpg";
+import paysafeLogo from "../assets/images/paysafe_logo.jpg";
+import salesforceLogo from "../assets/images/salesforce_logo.jpg";
+import sapLogo from "../assets/images/sap_logo.png";
 import {
   dailySalesChart,
   emailsSubscriptionChart,
@@ -46,29 +39,33 @@ const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
   const classes = useStyles()
-  const companyList = {
-    "companyList":[
-      {
-        "companyName":"BlackBerry"
-      },
-      {
-        "companyName":"Microsoft"
-      }
-    ]
+  const [skillsLoading, skillsData] = useHttpGet(APILinks.getSkillsCountUrl(), [])
+  const [openPositionsLoading, openPositionsData] = useHttpGet(APILinks.getOpenPositionCountUrl(), [])
+  const [skillsCompaniesCountLoading, skillsCompaniesCountData] = useHttpGet(APILinks.getSkillsCompaniesCountUrl(), [])
+  const [jobPostingLoading, jobPostingData] = useHttpGet(APILinks.getRelevantJobPostings(), [])
+  const getCompanyLogo = (name) => {
+    switch (name) {
+      case 'Microsoft': return microsoftLogo;
+        break;
+      case 'Salesforce': return salesforceLogo;
+        break;
+      case 'Blackberry': return blackberryLogo;
+        break;
+      case 'SAP': return sapLogo;
+        break;
+      case 'Paysafe Group': return paysafeLogo;
+        break;
+    }
   }
-  const [skillsLoading,skillsData]= useHttpGet(APILinks.getSkillsCountUrl() ,[ ])
-  const [openPositionsLoading,openPositionsData]= useHttpGet(APILinks.getOpenPositionCountUrl() ,companyList,[ ])
-  const [skillsCompaniesCountLoading,skillsCompaniesCountData]= useHttpGet(APILinks.getSkillsCompaniesCountUrl() ,companyList,[ ])
-
   const skillsChart = {
-    labels: skillsData? Object.keys(skillsData.data): [],
-    series: [skillsData? Object.values(skillsData.data): []]
+    labels: skillsData ? Object.keys(skillsData.data) : [],
+    series: [skillsData ? Object.values(skillsData.data) : []]
   }
-  
+
   return (
     <div>
-      <MenuAppBar/>
-      <GridContainer  style={{marginTop:'70px !important'}}>
+      <MenuAppBar />
+      <GridContainer style={{ marginTop: '70px !important' }}>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
             <CardHeader color="warning" stats icon>
@@ -77,7 +74,7 @@ export default function Dashboard() {
               </CardIcon>
               <p className={classes.cardCategory}>Open Positions</p>
               <h1 className={classes.cardTitle}>
-                {openPositionsData? openPositionsData.data: <span>Loading....</span>}
+                {openPositionsData ? openPositionsData.data : <span>Loading....</span>}
               </h1>
             </CardHeader>
             <CardFooter stats>
@@ -100,7 +97,7 @@ export default function Dashboard() {
               </CardIcon>
               <p className={classes.cardCategory}>Companies</p>
               <h1 className={classes.cardTitle}>
-                {skillsCompaniesCountData? skillsCompaniesCountData.data.companies: <span>Loading....</span>}
+                {skillsCompaniesCountData ? skillsCompaniesCountData.data["company_count"] : <span>Loading....</span>}
               </h1>
             </CardHeader>
             <CardFooter stats>
@@ -115,10 +112,10 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="primary" stats icon>
               <CardIcon color="primary">
-                <CalendarToday/>
+                <CalendarToday />
               </CardIcon>
               <p className={classes.cardCategory}>Events</p>
-              <h1 className={classes.cardTitle}>7</h1>
+              <h1 className={classes.cardTitle}>Coming Soon...</h1>
             </CardHeader>
             <CardFooter stats>
               {/* <div className={classes.stats}>
@@ -135,7 +132,7 @@ export default function Dashboard() {
                 <Apps />
               </CardIcon>
               <p className={classes.cardCategory}>Skills</p>
-              <h1 className={classes.cardTitle}>5</h1>
+              <h1 className={classes.cardTitle}>{skillsCompaniesCountData ? skillsCompaniesCountData.data["skills_count"] : <span>Loading....</span>}</h1>
             </CardHeader>
             <CardFooter stats>
               {/* <div className={classes.stats}>
@@ -222,28 +219,32 @@ export default function Dashboard() {
       </GridContainer>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
-          {companyList["companyList"].map((c,index)=>{
-            return (<Card >
-              <CardHeader color={[
-    "warning",
-    "success",
-    "danger",
-    "info",
-    "primary",
-    "rose"
-  ][index%5]}>
-                <h3>{c.companyName}</h3>
-              </CardHeader>
-              <CardBody>
-                <h4 className={classes.cardTitle}>Completed Tasks</h4>
-                <p className={classes.cardCategory}>Last Campaign Performance</p>
-              </CardBody>
-              <CardFooter chart>
-                
-                Some weblink
-              </CardFooter>
-            </Card>)
-          })}
+          {jobPostingData ? jobPostingData.data.map((jobPosting, index) => {
+            return (
+              <Card className={classes.card} key={index}>
+                <CardHeader color={jobPosting.probability>=25? jobPosting.probability>=50? jobPosting.probability>=75? "success":"info" :"warning" :"danger"} >
+                  <GridContainer>
+                    <GridItem md={1}><Avatar
+                      aria-label="recipe"
+                      sizes="40px,40px"
+                      src={getCompanyLogo(jobPosting.company)}
+                      className={classes.bigAvatar}
+                    ></Avatar></GridItem>
+                    <GridItem md={10}><h2>{jobPosting.position}</h2></GridItem>
+                    <GridItem md={1}><h2>{jobPosting.probability}%</h2></GridItem>
+                  </GridContainer>
+                </CardHeader>
+                <CardBody>
+                  <h4 className={classes.cardTitle}>Skills Required: {jobPosting.skillsRequired}</h4>
+                  <p className={classes.cardCategory}>{jobPosting.description}</p>
+                </CardBody>
+                <CardFooter chart>
+
+                  <p>{jobPosting.website}</p>
+            </CardFooter>
+              </Card>)
+          }) : <span>Loading....</span>}
+
           {/* <CustomTabs
             title="Tasks:"
             headerColor="primary"

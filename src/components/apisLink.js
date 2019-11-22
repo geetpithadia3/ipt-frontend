@@ -20,5 +20,8 @@ export const APILinks = {
     },
     getSkillsCompaniesCountUrl() {
         return this.getBaseUrl() + '/api/dashboard/get_skills_companies_count';
+    },
+    getRelevantJobPostings(){
+        return this.getBaseUrl() + '/api/dashboard/get_relevant_job_postings';
     }
 }

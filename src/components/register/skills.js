@@ -46,7 +46,7 @@ export default function Skills(props) {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([]);
 
-  let totalSkills =['C','C++','JAVA'];
+  let totalSkills =['C','C++','Java','SAP','Javascript','Hibernate','Jenkins','GIT','JIRA','JSP','SPringBoot','Force.com','Google Cloud Platform','Microsoft Azure','Microsoft Office','HANA','ABAP','Python','Angular','React','Heroku'];
   let skillSet = not(totalSkills, props.data)
   const [left, setLeft] = React.useState(skillSet);
   const [right, setRight] = React.useState(props.data);

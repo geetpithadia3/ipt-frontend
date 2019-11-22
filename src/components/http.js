@@ -7,7 +7,7 @@ export const useHttpGet = (target,dependencies) =>{
     useEffect(() => {
         setIsLoading(true)
         axios
-        .get(target)
+        .get(target,{"withCredentials":true, "headers":{"Access-Control-Allow-Credentials":true}})
         .then(function(response) {
           setFetchedData(response)
           setIsLoading(false)
