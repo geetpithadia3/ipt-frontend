@@ -15,11 +15,11 @@ var delays2 = 80,
 // // // Daily Sales
 // #############################
 
+// const
+
 const dailySalesChart = {
-  data: {
-    labels: ["M", "T", "W", "T", "F", "S", "S"],
-    series: [[12, 17, 7, 17, 23, 18, 38]]
-  },
+  data: [{ "name": "Workout", "data": { "Oct 19,2014,2:00:00 AM": 9,"Oct 19,2014,3:00:00 AM": 5, "Oct 20,2014,6:00:00 PM": 4} },
+  { "name": "Call parents", "data": { "Oct 19,2014,2:00:00 PM": 2,"Oct 19,2014,3:00:00 PM": 5, "Oct 20,2014,2:00:00 PM": 3} }],
   options: {
     lineSmooth: Chartist.Interpolation.cardinal({
       tension: 0
@@ -35,7 +35,7 @@ const dailySalesChart = {
   },
   // for animation
   animation: {
-    draw: function(data) {
+    draw: function (data) {
       if (data.type === "line" || data.type === "area") {
         data.element.animate({
           d: {
@@ -106,7 +106,7 @@ const emailsSubscriptionChart = {
       {
         seriesBarDistance: 5,
         axisX: {
-          labelInterpolationFnc: function(value) {
+          labelInterpolationFnc: function (value) {
             return value[0];
           }
         }
@@ -114,7 +114,7 @@ const emailsSubscriptionChart = {
     ]
   ],
   animation: {
-    draw: function(data) {
+    draw: function (data) {
       if (data.type === "bar") {
         data.element.animate({
           opacity: {
@@ -153,7 +153,7 @@ const completedTasksChart = {
     }
   },
   animation: {
-    draw: function(data) {
+    draw: function (data) {
       if (data.type === "line" || data.type === "area") {
         data.element.animate({
           d: {

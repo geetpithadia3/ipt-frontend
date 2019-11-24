@@ -18,7 +18,7 @@ function Copyright() {
     <Typography component={'div'} variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Internship Progress Tracker
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -93,14 +93,9 @@ export default function BasicDetails(props) {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
+      {/* <CssBaseline /> */}
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
+        
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>

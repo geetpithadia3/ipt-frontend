@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
 // @material-ui/core
@@ -26,6 +26,8 @@ import blackberryLogo from "../assets/images/blackberry_logo.jpg";
 import paysafeLogo from "../assets/images/paysafe_logo.jpg";
 import salesforceLogo from "../assets/images/salesforce_logo.jpg";
 import sapLogo from "../assets/images/sap_logo.png";
+import { LineChart, PieChart, ColumnChart } from 'react-chartkick'
+import { Chart } from "react-google-charts";
 import {
   dailySalesChart,
   emailsSubscriptionChart,
@@ -34,15 +36,20 @@ import {
 import { APILinks } from './apisLink';
 
 import styles from "../assets/jss/material-dashboard-react/views/dashboardStyle";
+import { Container } from "@material-ui/core";
+import { width } from "@material-ui/system";
 
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
   const classes = useStyles()
-  const [skillsLoading, skillsData] = useHttpGet(APILinks.getSkillsCountUrl(), [])
-  const [openPositionsLoading, openPositionsData] = useHttpGet(APILinks.getOpenPositionCountUrl(), [])
-  const [skillsCompaniesCountLoading, skillsCompaniesCountData] = useHttpGet(APILinks.getSkillsCompaniesCountUrl(), [])
-  const [jobPostingLoading, jobPostingData] = useHttpGet(APILinks.getRelevantJobPostings(), [])
+  const [skillsLoading, skillsData] = useHttpGet(APILinks.getSkillsCountUrl(), null, [])
+  const [openPositionsLoading, openPositionsData] = useHttpGet(APILinks.getOpenPositionCountUrl(), null, [])
+  const [skillsCompaniesCountLoading, skillsCompaniesCountData] = useHttpGet(APILinks.getSkillsCompaniesCountUrl(), null, [])
+  const [jobPostingLoading, jobPostingData] = useHttpGet(APILinks.getRelevantJobPostings(), null, [])
+  const [progressLoading, progressData] = useHttpGet(APILinks.getProgress(), { "data": { "trackingData": [] } }, [])
+  const [chartData,setChartData] = useState()
+  const [xData,setXData] = useState([])
   const getCompanyLogo = (name) => {
     switch (name) {
       case 'Microsoft': return microsoftLogo;
@@ -57,13 +64,26 @@ export default function Dashboard() {
         break;
     }
   }
-  const skillsChart = {
-    labels: skillsData ? Object.keys(skillsData.data) : [],
-    series: [skillsData ? Object.values(skillsData.data) : []]
-  }
+  const skillsChart = skillsData ? skillsData.data : []
+  const chartDat= useEffect(() => {
+    // var xData=[]
+    setChartData([ [{ type: 'date', label: 'Day' },"AA","BB"]])
+    // var xList =
+    progressData.data["trackingData"].map((trData, index) => {
+      chartData.push([new Date(trData[0]["timeStamp"]["$date"]),Object.values(trData[1])[0],Object.values(trData[2])[0]])
+      
+    })
+    console.log(chartData)
+  }, [progressData])
+
+  // skillsChart=l
+  // return skillsChart}
+  // labels: skillsData ? Object.keys(skillsData.data) : [],
+  // series: [skillsData ? Object.values(skillsData.data) : []]
+  // }
 
   return (
-    <div>
+    <Container maxWidth='xl'>
       <MenuAppBar />
       <GridContainer style={{ marginTop: '70px !important' }}>
         <GridItem xs={12} sm={6} md={3}>
@@ -147,13 +167,42 @@ export default function Dashboard() {
         <GridItem xs={12} sm={12} md={6}>
           <Card chart>
             <CardHeader >
-              <ChartistGraph
+              {/* <LineChart data={dailySalesChart.data} />
+               */}
+              <Chart
+                width={'100%'}
+                height={'500'}
+                chartType="Line"
+                loader={<div>Loading Chart</div>}
+                data={chartData
+                }
+                options={{
+                  chart: {
+                    title:
+                      'Progress Tracker',
+                  },
+                  width: 650,
+                  height: 300,
+                  series: {
+                    // Gives each series an axis name that matches the Y-axis below.
+                    0: { axis: 'Probability' },
+                  },
+                  axes: {
+                    // Adds labels to each axis; they don't have to match the axis names.
+                    y: {
+                      Probability: { label: 'Probability %' },
+                    },
+                  },
+                }}
+                rootProps={{ 'data-testid': '4' }}
+              />
+              {/* <ChartistGraph
                 className="ct-chart"
                 data={dailySalesChart.data}
                 type="Line"
                 options={dailySalesChart.options}
                 listener={dailySalesChart.animation}
-              />
+              /> */}
             </CardHeader>
             <CardBody>
               <h4 className={classes.cardTitle}>Daily Sales</h4>
@@ -174,14 +223,15 @@ export default function Dashboard() {
         <GridItem xs={12} sm={12} md={6}>
           <Card chart>
             <CardHeader>
-              <ChartistGraph
+              <ColumnChart data={skillsChart} xtitle="Skills" ytitle="Company Count" messages={{ empty: "No data" }} />
+              {/* <ChartistGraph
                 className="ct-chart"
                 data={skillsChart}
                 type="Bar"
                 options={emailsSubscriptionChart.options}
                 responsiveOptions={emailsSubscriptionChart.responsiveOptions}
                 listener={emailsSubscriptionChart.animation}
-              />
+              /> */}
             </CardHeader>
             <CardBody>
               <h4 className={classes.cardTitle}>Email Subscriptions</h4>
@@ -222,7 +272,7 @@ export default function Dashboard() {
           {jobPostingData ? jobPostingData.data.map((jobPosting, index) => {
             return (
               <Card className={classes.card} key={index}>
-                <CardHeader color={jobPosting.probability>=25? jobPosting.probability>=50? jobPosting.probability>=75? "success":"info" :"warning" :"danger"} >
+                <CardHeader color={jobPosting.probability >= 25 ? jobPosting.probability >= 50 ? jobPosting.probability >= 75 ? "success" : "info" : "warning" : "danger"} >
                   <GridContainer>
                     <GridItem md={1}><Avatar
                       aria-label="recipe"
@@ -241,7 +291,7 @@ export default function Dashboard() {
                 <CardFooter chart>
 
                   <p>{jobPosting.website}</p>
-            </CardFooter>
+                </CardFooter>
               </Card>)
           }) : <span>Loading....</span>}
 
@@ -308,6 +358,6 @@ export default function Dashboard() {
           </Card>
         </GridItem> */}
       </GridContainer>
-    </div>
+    </Container>
   );
 }

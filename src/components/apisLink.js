@@ -23,5 +23,8 @@ export const APILinks = {
     },
     getRelevantJobPostings(){
         return this.getBaseUrl() + '/api/dashboard/get_relevant_job_postings';
+    },
+    getProgress(){
+        return this.getBaseUrl() + '/api/activity/track';
     }
 }

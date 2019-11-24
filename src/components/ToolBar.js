@@ -13,6 +13,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { APILinks } from './apisLink';
 import axios from "axios";
+import Login from "./login";
+import { Route } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,9 +50,9 @@ export default function MenuAppBar() {
   const handleLogOut=()=>{
     var apiBaseUrl = APILinks.getLoginUrl();
     axios
-      .get(apiBaseUrl + "logout", {"withCredentials":true, "headers":{ "Access-Control-Allow-Credentials":true,'Access-Control-Allow-Origin': 'http://localhost:3000'}})
+      .get(apiBaseUrl + "logout", {"withCredentials":true, "headers":{ "Access-Control-Allow-Credentials":true}})
       .then(function(response) {
-        
+        console.log("log")
       })
       .catch(function(error) {
         console.log(error);
@@ -93,7 +96,7 @@ export default function MenuAppBar() {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleLogOut}><Link to="/login">Logout</Link></MenuItem>
               </Menu>
             </div>
           )}

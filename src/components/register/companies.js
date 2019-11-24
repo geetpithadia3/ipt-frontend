@@ -25,9 +25,10 @@ import Axios from "axios";
 const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 300,
-    margin: 5,
+    margin: 45,
     height: 300,
-    float: "left"
+    float: "left",
+    boxShadow:"0px 0px 5px  5px lightgrey"
   },
   media: {
     height: 0,

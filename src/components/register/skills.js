@@ -10,17 +10,22 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import { boxShadow } from 'assets/jss/material-dashboard-react';
 
 const useStyles = makeStyles(theme => ({
   root: {
     margin: 'auto',
     width: 'auto'
   },
+  card:{
+    width:"250px",
+    boxShadow:"0px 0px 5px  5px lightgrey"
+  },
   cardHeader: {
     padding: theme.spacing(1, 2),
   },
   list: {
-    width: 200,
+    width: 250,
     height: 230,
     backgroundColor: theme.palette.background.paper,
     overflow: 'auto',
@@ -97,7 +102,7 @@ export default function Skills(props) {
   };
 
   const customList = (title, items) => (
-    <Card>
+    <Card className={classes.card}>
       <CardHeader
         className={classes.cardHeader}
         avatar={

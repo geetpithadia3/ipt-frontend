@@ -1,9 +1,9 @@
 import {useState, useEffect} from 'react'
 import axios from "axios";
 
-export const useHttpGet = (target,dependencies) =>{
+export const useHttpGet = (target,initialData,dependencies) =>{
     const [isLoading, setIsLoading] = useState(false);
-    const [fetchedData, setFetchedData] =useState();
+    const [fetchedData, setFetchedData] =useState(initialData);
     useEffect(() => {
         setIsLoading(true)
         axios

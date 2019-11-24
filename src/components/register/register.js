@@ -9,18 +9,42 @@ import BasicDetails from "./basic";
 import Skills from "./skills";
 import Companies from "./companies";
 import Success from "./success";
+import Container from '@material-ui/core/Container';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Avatar from '@material-ui/core/Avatar';
+import GridContainer from "components/tools/Grid/GridContainer";
+import GridItem from "components/tools/Grid/GridItem";
+import { height } from "@material-ui/system";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: "90%"
+    width: "90%",
+    boxShadow: "0 0 10px 2px lightgrey",
+    marginTop: "40px",
+    padding: "40px"
+
+  },
+  cont: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   button: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+  },
+  buttonCont: {
+    display:'flex',
+    flexDirection: 'column',
+    alignItems:'center'
+  },
+  avatar: {
+    backgroundColor: theme.palette.primary.main,
   },
   instructions: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
-    overflow: "auto"
+    overflow: "auto",
+    height:"390px"
   }
 }));
 
@@ -129,7 +153,15 @@ export default function Register() {
   };
 
   return (
-    <div className={classes.root}>
+    <Container maxWidth="md" className={classes.root} >
+      <div className={classes.cont}>
+        <Avatar className={classes.avatar} >
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
+      </div>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
@@ -157,15 +189,19 @@ export default function Register() {
               <Typography className={classes.instructions} component="div">
                 {getStepContent(activeStep)}
               </Typography>
-              <div>
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  className={classes.button}
-                >
-                  Back
+              <GridContainer>
+                <GridItem md={3} className={classes.buttonCont}>
+                  <Button
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    className={classes.button}
+                  >
+                    Back
               </Button>
-                {isStepOptional(activeStep) && (
+                </GridItem >
+                <GridItem md={3}></GridItem>
+                <GridItem md={3}></GridItem>
+                {/* {isStepOptional(activeStep) && (
                   <Button
                     variant="contained"
                     color="primary"
@@ -174,20 +210,21 @@ export default function Register() {
                   >
                     Skip
                 </Button>
-                )}
-
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                  className={classes.button}
-                >
-                  {activeStep === steps.length - 1 ? "Finish" : ">"}
-                </Button>
-              </div>
+                )} */}
+                <GridItem md={3} className={classes.buttonCont}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.button}
+                  >
+                    {activeStep === steps.length - 1 ? "Finish" : ">"}
+                  </Button>
+                </GridItem>
+              </GridContainer>
             </div>
           )}
       </div>
-    </div>
+    </Container>
   );
 }
