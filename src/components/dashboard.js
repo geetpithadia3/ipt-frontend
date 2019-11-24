@@ -48,8 +48,8 @@ export default function Dashboard() {
   const [skillsCompaniesCountLoading, skillsCompaniesCountData] = useHttpGet(APILinks.getSkillsCompaniesCountUrl(), null, [])
   const [jobPostingLoading, jobPostingData] = useHttpGet(APILinks.getRelevantJobPostings(), null, [])
   const [progressLoading, progressData] = useHttpGet(APILinks.getProgress(), null, [])
-  const [chartData,setChartData] = useState()
-  const [xData,setXData] = useState([])
+  const [chartData, setChartData] = useState()
+  const [xData, setXData] = useState([])
   const getCompanyLogo = (name) => {
     switch (name) {
       case 'Microsoft': return microsoftLogo;
@@ -66,24 +66,42 @@ export default function Dashboard() {
   }
   const skillsChart = skillsData ? skillsData.data : []
 
-  const chartDat= useEffect(() => {
+  const chartDat = useEffect(() => {
     // var xData=[]
-    
+
     // var xList =
     if (progressData) {
       let trackerChartData = [];
       // adding headers
-      trackerChartData.push([
+      const tList = []
+      tList.push(
         { type: 'date', label: 'Day' },
-        'Average temperature',
-        'Average hours of daylight',
-      ]);
-      progressData.data.data["trackingData"].map((trData, index) => {
-        trackerChartData.push([new Date(trData[0]["timeStamp"]["$date"]),Object.values(trData[1])[0],Object.values(trData[2])[0]])
+      );
+      // const cData=[]
+      progressData.data["trackingData"].map((trData, index) => {
+        const tData = []
+        Object.keys(trData).map(key => {
+          if (key !== "timeStamp" && index <= 0) {
+            tList.push(key)
+          }
+          if (key === "timeStamp") {
+            tData.push(new Date(trData[key]["$date"]))
+          }
+          else {
+            tData.push(trData[key])
+          }
+        })
+        if (index <= 0) {
+          trackerChartData.push(tList)
+        }
+        trackerChartData.push(tData)
+
+
       })
+
       setChartData(trackerChartData);
     }
-    
+
   }, [progressData])
 
   // skillsChart=l
