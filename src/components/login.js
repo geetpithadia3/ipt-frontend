@@ -78,12 +78,12 @@ class Login extends Component {
     axios
       .post(apiBaseUrl + "authenticate", payload,{"withCredentials":true, "headers":{ "Access-Control-Allow-Credentials":true,'Access-Control-Allow-Origin': 'http://localhost:3000'}})
       .then(function(response) {
-        if (response.data.status == 200) {
+        if (response.data.status === 200) {
           // navigating to dashboard
           self.setState({
             loginSuccess: true
           });
-        } else if (response.data.status == 204) {
+        } else if (response.data.status === 204) {
           console.log("Username password do not match");
           alert("username password do not match");
         } else {

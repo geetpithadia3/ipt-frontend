@@ -47,7 +47,7 @@ export default function Dashboard() {
   const [openPositionsLoading, openPositionsData] = useHttpGet(APILinks.getOpenPositionCountUrl(), null, [])
   const [skillsCompaniesCountLoading, skillsCompaniesCountData] = useHttpGet(APILinks.getSkillsCompaniesCountUrl(), null, [])
   const [jobPostingLoading, jobPostingData] = useHttpGet(APILinks.getRelevantJobPostings(), null, [])
-  const [progressLoading, progressData] = useHttpGet(APILinks.getProgress(), { "data": { "trackingData": [] } }, [])
+  const [progressLoading, progressData] = useHttpGet(APILinks.getProgress(), null, [])
   const [chartData,setChartData] = useState()
   const [xData,setXData] = useState([])
   const getCompanyLogo = (name) => {
@@ -65,15 +65,25 @@ export default function Dashboard() {
     }
   }
   const skillsChart = skillsData ? skillsData.data : []
+
   const chartDat= useEffect(() => {
     // var xData=[]
-    setChartData([ [{ type: 'date', label: 'Day' },"AA","BB"]])
+    
     // var xList =
-    progressData.data["trackingData"].map((trData, index) => {
-      chartData.push([new Date(trData[0]["timeStamp"]["$date"]),Object.values(trData[1])[0],Object.values(trData[2])[0]])
-      
-    })
-    console.log(chartData)
+    if (progressData) {
+      let trackerChartData = [];
+      // adding headers
+      trackerChartData.push([
+        { type: 'date', label: 'Day' },
+        'Average temperature',
+        'Average hours of daylight',
+      ]);
+      progressData.data.data["trackingData"].map((trData, index) => {
+        trackerChartData.push([new Date(trData[0]["timeStamp"]["$date"]),Object.values(trData[1])[0],Object.values(trData[2])[0]])
+      })
+      setChartData(trackerChartData);
+    }
+    
   }, [progressData])
 
   // skillsChart=l
