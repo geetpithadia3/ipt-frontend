@@ -98,8 +98,8 @@ export default function MenuAppBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}><Link to="/profile">Profile</Link></MenuItem>
-                <MenuItem onClick={handleLogOut}><Link to="/login">Logout</Link></MenuItem>
+                <MenuItem onClick={handleClose}><Link to="/profile" style={{ textDecoration: 'none', color:'black' }}>Update skills</Link></MenuItem>
+                <MenuItem onClick={handleLogOut}><Link to="/login" style={{ textDecoration: 'none', color:'black' }}>Logout</Link></MenuItem>
               </Menu>
             </div>
           )}
