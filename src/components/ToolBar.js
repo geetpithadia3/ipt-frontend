@@ -47,14 +47,14 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
-  const handleLogOut=()=>{
+  const handleLogOut = () => {
     var apiBaseUrl = APILinks.getLoginUrl();
     axios
-      .get(apiBaseUrl + "logout", {"withCredentials":true, "headers":{ "Access-Control-Allow-Credentials":true}})
-      .then(function(response) {
+      .get(apiBaseUrl + "logout", { "withCredentials": true, "headers": { "Access-Control-Allow-Credentials": true } })
+      .then(function (response) {
         console.log("log")
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   }
@@ -67,7 +67,10 @@ export default function MenuAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
+            <Link to="/dashboard" style={{ textDecoration: 'none', color:'white' }}>
             Intership Progress Tracker
+</Link>
+           
           </Typography>
           {auth && (
             <div>

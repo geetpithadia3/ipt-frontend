@@ -95,10 +95,7 @@ export default function Dashboard() {
           trackerChartData.push(tList)
         }
         trackerChartData.push(tData)
-
-
       })
-
       setChartData(trackerChartData);
     }
 
@@ -125,15 +122,7 @@ export default function Dashboard() {
                 {openPositionsData ? openPositionsData.data : <span>Loading....</span>}
               </h1>
             </CardHeader>
-            <CardFooter stats>
-              {/* <div className={classes.stats}>
-                <Danger>
-                  <Warning />
-                </Danger>
-                <a href="#pablo" onClick={e => e.preventDefault()}>
-                  Get more space
-                </a>
-              </div> */}
+            <CardFooter stats>Number of open positions in companies selected
             </CardFooter>
           </Card>
         </GridItem>
@@ -149,10 +138,7 @@ export default function Dashboard() {
               </h1>
             </CardHeader>
             <CardFooter stats>
-              {/* <div className={classes.stats}>
-                <DateRange />
-                Last 24 Hours
-              </div> */}
+              Count of companies interested in
             </CardFooter>
           </Card>
         </GridItem>
@@ -166,10 +152,7 @@ export default function Dashboard() {
               <h1 className={classes.cardTitle}>Coming Soon...</h1>
             </CardHeader>
             <CardFooter stats>
-              {/* <div className={classes.stats}>
-                <LocalOffer />
-                Tracked from Github
-              </div> */}
+             Number of events registered for
             </CardFooter>
           </Card>
         </GridItem>
@@ -183,10 +166,7 @@ export default function Dashboard() {
               <h1 className={classes.cardTitle}>{skillsCompaniesCountData ? skillsCompaniesCountData.data["skills_count"] : <span>Loading....</span>}</h1>
             </CardHeader>
             <CardFooter stats>
-              {/* <div className={classes.stats}>
-                <Update />
-                Just Updated
-              </div> */}
+              Current count of skills
             </CardFooter>
           </Card>
         </GridItem>
@@ -201,47 +181,36 @@ export default function Dashboard() {
                 width={'100%'}
                 height={'500'}
                 chartType="Line"
+                ytitle="Probability %"
                 loader={<div>Loading Chart</div>}
                 data={chartData
                 }
                 options={{
-                  chart: {
-                    title:
-                      'Progress Tracker',
-                  },
+                  
                   width: 650,
-                  height: 300,
-                  series: {
-                    // Gives each series an axis name that matches the Y-axis below.
-                    0: { axis: 'Probability' },
-                  },
-                  axes: {
-                    // Adds labels to each axis; they don't have to match the axis names.
-                    y: {
-                      Probability: { label: 'Probability %' },
-                    },
-                  },
+                  height: 300
+                  
+                  // series: {
+                  //   // Gives each series an axis name that matches the Y-axis below.
+                  //   0: { axis: 'Probability' },
+                  // },
+                  // axes: {
+                  //   // Adds labels to each axis; they don't have to match the axis names.
+                  //   y: {
+                  //     Probability: { label: 'Probability %' },
+                  //   },
+                  // },
                 }}
                 rootProps={{ 'data-testid': '4' }}
               />
-              {/* <ChartistGraph
-                className="ct-chart"
-                data={dailySalesChart.data}
-                type="Line"
-                options={dailySalesChart.options}
-                listener={dailySalesChart.animation}
-              /> */}
             </CardHeader>
-            {/* <CardBody>
-              <h4 className={classes.cardTitle}>Daily Sales</h4>
+            <CardBody>
+              <h4 className={classes.cardTitle}>Progress Tracker</h4>
               <p className={classes.cardCategory}>
-                <span className={classes.successText}>
-                  <ArrowUpward className={classes.upArrowCardCategory} /> 55%
-                </span>{" "}
-                increase in today sales.
+                Shows the progress as skills update
               </p>
             </CardBody>
-            <CardFooter chart>
+            {/* <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime /> updated 4 minutes ago
               </div>
@@ -251,49 +220,20 @@ export default function Dashboard() {
         <GridItem xs={12} sm={12} md={6}>
           <Card chart>
             <CardHeader>
-              <ColumnChart data={skillsChart} xtitle="Skills" ytitle="Company Count" messages={{ empty: "No data" }} />
-              {/* <ChartistGraph
-                className="ct-chart"
-                data={skillsChart}
-                type="Bar"
-                options={emailsSubscriptionChart.options}
-                responsiveOptions={emailsSubscriptionChart.responsiveOptions}
-                listener={emailsSubscriptionChart.animation}
-              /> */}
+              <ColumnChart data={skillsChart} xtitle="Skills" ytitle="Job Postings Count" messages={{ empty: "No data" }} />
             </CardHeader>
-            {/* <CardBody>
-              <h4 className={classes.cardTitle}>Email Subscriptions</h4>
-              <p className={classes.cardCategory}>Last Campaign Performance</p>
+            <CardBody>
+              <h4 className={classes.cardTitle}>Skill Required Count</h4>
+              <p className={classes.cardCategory}>Shows the skills required in number of job postings</p>
             </CardBody>
-            <CardFooter chart>
+            {/* <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime /> campaign sent 2 days ago
               </div>
             </CardFooter> */}
           </Card>
         </GridItem>
-        {/* <GridItem xs={12} sm={12} md={4}>
-          <Card chart>
-            <CardHeader>
-              <ChartistGraph
-                className="ct-chart"
-                data={completedTasksChart.data}
-                type="Line"
-                options={completedTasksChart.options}
-                listener={completedTasksChart.animation}
-              />
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>Completed Tasks</h4>
-              <p className={classes.cardCategory}>Last Campaign Performance</p>
-            </CardBody>
-            <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> campaign sent 2 days ago
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem> */}
+       
       </GridContainer>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
@@ -318,73 +258,11 @@ export default function Dashboard() {
                 </CardBody>
                 <CardFooter chart>
 
-                  <p>{jobPosting.website}</p>
+                  <a >{jobPosting.website}</a>
                 </CardFooter>
               </Card>)
           }) : <span>Loading....</span>}
-
-          {/* <CustomTabs
-            title="Tasks:"
-            headerColor="primary"
-            tabs={[
-              {
-                tabName: "Bugs",
-                tabIcon: BugReport,
-                tabContent: (
-                  <Tasks
-                    checkedIndexes={[0, 3]}
-                    tasksIndexes={[0, 1, 2, 3]}
-                    tasks={bugs}
-                  />
-                )
-              },
-              {
-                tabName: "Website",
-                tabIcon: Code,
-                tabContent: (
-                  <Tasks
-                    checkedIndexes={[0]}
-                    tasksIndexes={[0, 1]}
-                    tasks={website}
-                  />
-                )
-              },
-              {
-                tabName: "Server",
-                tabIcon: Cloud,
-                tabContent: (
-                  <Tasks
-                    checkedIndexes={[1]}
-                    tasksIndexes={[0, 1, 2]}
-                    tasks={server}
-                  />
-                )
-              }
-            ]}
-          /> */}
         </GridItem>
-        {/* <GridItem xs={12} sm={12} md={6}>
-          <Card>
-            <CardHeader color="warning">
-              <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
-              <p className={classes.cardCategoryWhite}>
-                New employees on 15th September, 2016
-              </p>
-            </CardHeader>
-            <CardBody>
-              <Table
-                tableHeaderColor="warning"
-                tableHead={["ID", "Name", "Salary", "Country"]}
-                tableData={[
-                  ["1", "Dakota Rice", "$36,738", "Niger"],
-                  ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                  ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                  ["4", "Philip Chaney", "$38,735", "Korea, South"]
-                ]}
-              />
-            </CardBody>
-          </Card>
-        </GridItem> */}
       </GridContainer>
     </Container>
   );
