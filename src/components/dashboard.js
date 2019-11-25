@@ -232,7 +232,7 @@ export default function Dashboard() {
                 listener={dailySalesChart.animation}
               /> */}
             </CardHeader>
-            <CardBody>
+            {/* <CardBody>
               <h4 className={classes.cardTitle}>Daily Sales</h4>
               <p className={classes.cardCategory}>
                 <span className={classes.successText}>
@@ -245,7 +245,7 @@ export default function Dashboard() {
               <div className={classes.stats}>
                 <AccessTime /> updated 4 minutes ago
               </div>
-            </CardFooter>
+            </CardFooter> */}
           </Card>
         </GridItem>
         <GridItem xs={12} sm={12} md={6}>
@@ -261,7 +261,7 @@ export default function Dashboard() {
                 listener={emailsSubscriptionChart.animation}
               /> */}
             </CardHeader>
-            <CardBody>
+            {/* <CardBody>
               <h4 className={classes.cardTitle}>Email Subscriptions</h4>
               <p className={classes.cardCategory}>Last Campaign Performance</p>
             </CardBody>
@@ -269,7 +269,7 @@ export default function Dashboard() {
               <div className={classes.stats}>
                 <AccessTime /> campaign sent 2 days ago
               </div>
-            </CardFooter>
+            </CardFooter> */}
           </Card>
         </GridItem>
         {/* <GridItem xs={12} sm={12} md={4}>

@@ -55,16 +55,21 @@ export default function Skills(props) {
   let skillSet = not(totalSkills, props.data)
   const [left, setLeft] = React.useState(skillSet);
   const [right, setRight] = React.useState(props.data);
-
-  const leftChecked = intersection(checked, left);
-  const rightChecked = intersection(checked, right);
+  const leftChecked = intersection(checked, skillSet);
+  const rightChecked = intersection(checked, props.data);
 
   React.useEffect(() => {
+    let skillSet = not(totalSkills, right)
+    setLeft(skillSet)
     props.saveDetails({
       component: 'skills',
       data: right
     });
   }, [right]);
+
+  React.useEffect(() => {
+    setRight(props.data)
+  }, [props.data]);
 
   const handleToggle = value => () => {
     const currentIndex = checked.indexOf(value);

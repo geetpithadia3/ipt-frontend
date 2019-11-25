@@ -26,5 +26,11 @@ export const APILinks = {
     },
     getProgress(){
         return this.getBaseUrl() + '/api/activity/track';
+    },
+    getCurrentSkillsUrl() {
+        return this.getBaseUrl() + '/api/dashboard/getskillslist'
+    },
+    updateUserSkillsUrl() {
+        return this.getBaseUrl() + '/api/dashboard/updateskillslist'
     }
 }
